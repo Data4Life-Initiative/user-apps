@@ -1,22 +1,31 @@
 import React, {useState} from 'react';
-import './App.css';
-import Switch from '@material-ui/core/Switch';
-import MapContainer from './features/heatmap/MapContainer'
+import {Container, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles'
+import MapContainer from './features/heatmap/MapContainer';
+
+const useStyles = makeStyles({
+  app: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  mapContainer: {
+    flexGrow: 1
+  }
+})
 
 function App() {
-  const [show, setShow] = useState(true)
-
+  const classes = useStyles()
   return (
-    <div className="App">
-        <div>
-          <Switch checked={show} onChange={_ => setShow(!show)}/>
-        </div>
-        <div>
-        { show &&
-        <MapContainer />
-        }
-        </div>
-    </div>
+    <Container className={classes.app}>
+        <Container>
+          <Typography>Data4Life</Typography>
+        </Container>
+        <Container className={classes.mapContainer}>
+          <MapContainer />
+        </Container>
+    </Container>
   );
 }
 

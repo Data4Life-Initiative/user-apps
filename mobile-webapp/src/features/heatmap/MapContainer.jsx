@@ -44,8 +44,8 @@ const MapComponent = () => {
            lng: 18.068611
           }}
           mapContainerStyle={{
-            height: "400px",
-            width: "800px"
+            height: "100%",
+            width: "100%"
           }}
           onClick={e => dispatch(addData({lat: e.latLng.lat(), lng: e.latLng.lng()}))}
         >
