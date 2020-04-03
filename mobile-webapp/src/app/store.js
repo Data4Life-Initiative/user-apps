@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import heatmapReducer from '../features/heatmap/heatmapSlice';
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
+    heatmap: heatmapReducer,
   },
 });
