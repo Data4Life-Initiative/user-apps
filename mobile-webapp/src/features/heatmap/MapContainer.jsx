@@ -10,7 +10,7 @@ const libraries = ['places', 'visualization'];
 
 const MapComponent = (props) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg",
+    googleMapsApiKey: 'AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg',
     libraries,
   });
   const data = useSelector(selectHeatmapData);
@@ -46,7 +46,9 @@ const MapComponent = (props) => {
       </GoogleMap>
     );
   };
-  if (loadError) console.error(loadError);
+  if (loadError) {
+    return <div>loadError</div>;
+  }
   return isLoaded ? renderMap() : <h1>Loading...</h1>;
 };
 
