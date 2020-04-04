@@ -30,7 +30,13 @@ spec:
           image: eu.gcr.io/public-data4life/covid-19-mapview-user-app:master-20200404145216-7fd777f
           ports:
             - containerPort: 80
-
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/src/app/src/features/heatmap/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: user-app-config
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
