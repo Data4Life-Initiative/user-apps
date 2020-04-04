@@ -4,7 +4,7 @@ export const slice = createSlice({
   name: 'menu',
   initialState: {
     showMain: false,
-    activePage: 'home',
+    activePage: 'login',
   },
   reducers: {
     toggleMain: (state) => {

@@ -34,9 +34,9 @@ function App() {
       <Container className={classes.mapContainer}>
         <MapContainer />
       </Container>
-      {/* <Container className={classes.bar}>
+      <Container className={classes.bar}>
         <MenuOverlay />
-      </Container> */}
+      </Container>
     </Container>
   );
 }
