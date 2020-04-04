@@ -10,7 +10,7 @@ const libraries = ['places', 'visualization'];
 
 const MapComponent = (props) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: window.ENV.GOOGLE_API_KEY,
+    googleMapsApiKey: "AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg",
     libraries,
   });
   const data = useSelector(selectHeatmapData);

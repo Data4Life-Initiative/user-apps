@@ -27,15 +27,23 @@ spec:
     spec:
       containers:
         - name: user-app
-          image: eu.gcr.io/public-data4life/covid-19-mapview-user-app:master-20200404145216-7fd777f
+          image: eu.gcr.io/public-data4life/covid-19-mapview-user-app:master-20200404124505-2e87b76
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: "/usr/share/nginx/html/config.js"
+              subPath: "config.js"
           env:
             - name: REACT_APP_GOOGLE_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: user-app-map-credentials
                   key: map_token
+      volumes:
+        - name: config-volume
+          configMap:
+            name: user-app-config
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
