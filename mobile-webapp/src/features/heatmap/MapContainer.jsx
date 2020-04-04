@@ -47,7 +47,7 @@ const MapComponent = (props) => {
     );
   };
   if (loadError) {
-    return <div>loadError</div>;
+    return <h1>{loadError.message}</h1>;
   }
   return isLoaded ? renderMap() : <h1>Loading...</h1>;
 };
