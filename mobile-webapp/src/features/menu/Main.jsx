@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { CloseMenu } from '../../components/IconControls';
 import { useDispatch } from 'react-redux';
 import { toggleMain, setActivePage } from './menuSlice';
+import { logout } from './loginSlice';
 
 const useStyle = makeStyles({
   container: {
@@ -22,15 +23,11 @@ const useStyle = makeStyles({
   },
 });
 
-const Entry = ({ page }) => {
+const Entry = ({ title, action }) => {
   const classes = useStyle();
-  const dispatch = useDispatch();
   return (
-    <Button
-      onClick={() => dispatch(setActivePage(page))}
-      className={classes.entry}
-    >
-      {page}
+    <Button onClick={action} className={classes.entry}>
+      {title}
     </Button>
   );
 };
@@ -42,11 +39,20 @@ const MainMenu = () => {
     <Container className={classes.container}>
       <CloseMenu action={() => dispatch(toggleMain())} />
       <Container className={classes.list}>
-        {['home', 'account', 'notifications', 'data preferences', 'about'].map(
-          (e) => (
-            <Entry key={e} page={e} />
-          )
-        )}
+        {['home', 'account'].map((e) => (
+          <Entry key={e} title={e} action={() => dispatch(setActivePage(e))} />
+        ))}
+        {['notifications', 'data preferences'].map((e) => (
+          <Entry key={e} title={e} action={() => {}} />
+        ))}
+        <Entry
+          key="logout"
+          title="logout"
+          action={() => {
+            dispatch(logout());
+            dispatch(setActivePage('login'));
+          }}
+        />
       </Container>
     </Container>
   );

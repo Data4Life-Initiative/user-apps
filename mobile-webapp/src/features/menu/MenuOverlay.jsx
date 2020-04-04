@@ -5,6 +5,7 @@ import { OpenMenu } from '../../components/IconControls';
 import RiskSelect from './RiskSelect';
 import Main from './Main';
 import Account from './Account';
+import Login from './Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowMenu, toggleMain, selectActivePage } from './menuSlice';
 
@@ -24,9 +25,9 @@ const useStyle = makeStyles({
 const menus = {
   main: <Main />,
   account: <Account />,
-  notifications: <Account />,
-  'data preferences': <Account />,
-  about: <Account />,
+  // notifications: ,
+  // 'data preferences': ,
+  login: <Login />,
 };
 
 const MenuOverlay = () => {

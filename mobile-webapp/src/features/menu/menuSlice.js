@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const slice = createSlice({
   name: 'menu',
   initialState: {
-    showMain: true,
-    activePage: 'home',
+    showMain: false,
+    activePage: 'login',
   },
   reducers: {
     toggleMain: (state) => {
