@@ -45,14 +45,7 @@ const MainMenu = () => {
         {['notifications', 'data preferences'].map((e) => (
           <Entry key={e} title={e} action={() => {}} />
         ))}
-        <Entry
-          key="logout"
-          title="logout"
-          action={() => {
-            dispatch(logout());
-            dispatch(setActivePage('login'));
-          }}
-        />
+        <Entry key="logout" title="logout" action={() => dispatch(logout())} />
       </Container>
     </Container>
   );

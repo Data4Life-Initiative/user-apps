@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { setActivePage } from './menuSlice';
+import { profileLoaded, unloadProfile } from '../account/accountSlice';
 
 const endpoint = 'https://mydata4life-api.igrant.io/v1/auth/otp';
 
 const initialState = {
   access_token: '',
-  profile: {},
   loggedIn: false,
   awaitingOtp: undefined,
   error: undefined,
@@ -17,7 +17,7 @@ export const slice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    logout: (state) => {
+    doLogout: (state) => {
       Object.assign(state, initialState);
     },
     update: (state, action) => {
@@ -25,8 +25,6 @@ export const slice = createSlice({
     },
   },
 });
-
-export const { logout } = slice.actions;
 
 export const login = (mobile) => (dispatch) => {
   const { update } = slice.actions;
@@ -37,18 +35,25 @@ export const login = (mobile) => (dispatch) => {
     .catch((error) => dispatch(update({ error, working: false })));
 };
 
+export const logout = () => (dispatch) => {
+  dispatch(slice.actions.doLogout());
+  dispatch(setActivePage('login'));
+  dispatch(unloadProfile());
+};
+
 export const confirm = (mobile, otp) => (dispatch) => {
   const { update } = slice.actions;
   dispatch(update({ working: true }));
   axios
     .post(`${endpoint}/verify/citizen`, { mobile, otp })
     .then((res) => {
+      console.log(res);
       const { status, data } = res;
       if (status === 200) {
-        const { access_token, profile } = data;
-        dispatch(
-          update({ access_token, profile, working: false, loggedIn: true })
-        );
+        const { access_token, profile } = data.data;
+        console.log(data);
+        dispatch(profileLoaded(profile));
+        dispatch(update({ access_token, working: false, loggedIn: true }));
         dispatch(setActivePage('home'));
       } else {
         dispatch(update({ error: data.msg }));

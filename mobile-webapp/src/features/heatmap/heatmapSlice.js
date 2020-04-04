@@ -1,13 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { data } from './dummyHeat';
+// import { data } from './dummyHeat';
 
 export const slice = createSlice({
   name: 'heatmap',
   initialState: {
-    data,
+    data: [],
     show: false,
+    center: {
+      lat: 59.329444,
+      lng: 18.068611,
+    },
   },
   reducers: {
+    setCenter: (state, center) => {
+      state.center = center;
+    },
     addData: (state, action) => {
       state.data.push(action.payload);
     },
@@ -20,5 +27,6 @@ export const slice = createSlice({
 export const { addData } = slice.actions;
 
 export const selectHeatmapData = (state) => state.heatmap.data;
+export const selectCenter = (state) => state.heatmap.center;
 
 export default slice.reducer;

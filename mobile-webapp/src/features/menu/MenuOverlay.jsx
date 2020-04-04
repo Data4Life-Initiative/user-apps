@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { OpenMenu } from '../../components/IconControls';
 import RiskSelect from './RiskSelect';
 import Main from './Main';
-import Account from './Account';
+import Account from '../account/Account';
 import Login from './Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowMenu, toggleMain, selectActivePage } from './menuSlice';
