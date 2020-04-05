@@ -39,7 +39,8 @@ const useStyle = makeStyles({
     paddingBottom: 12
   },
   guage: {
-    width: 400
+    width: 400,
+    maxWidth: '100%'
   },
   footer: {
     alignSelf: 'end'
@@ -60,7 +61,7 @@ const useStyle = makeStyles({
   testbutton: {
     fontSize: 14,
     lineHeight,
-    width,
+    width: '90%',
     marginTop: 20,
     fontFamily: ['Arial'],
     borderRadius: 18,

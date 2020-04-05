@@ -67,7 +67,8 @@ const useStyle = makeStyles({
     textAlign: 'center',
     flex: 1,
     fontFamily: ['Arial'],
-    fontSize: 30,
+    marginLeft: -42,
+    fontSize: 24,
   },
   label: {
     marginTop: 15,

@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles({
   icon: {
-    fontSize: 54,
+    fontSize: 42,
   },
 });
 

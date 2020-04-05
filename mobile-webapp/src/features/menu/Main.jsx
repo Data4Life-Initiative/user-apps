@@ -15,14 +15,14 @@ const useStyle = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
-    backgroundColor: 'rgb(255, 255, 255, 0.8)',
+    backgroundColor: 'rgb(255, 255, 255, 0.9)',
     borderRadius: 8,
-    width: 375,
+    width: 300,
     marginLeft: 16
   },
   entry: {
     fontFamily: 'Arial',
-    fontSize: 30,
+    fontSize: 24,
     padding: 0,
     paddingBottom: 10,
   },
