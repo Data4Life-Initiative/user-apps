@@ -41,9 +41,7 @@ const RiskSelect = () => {
         value={1}
         input={<InputBase className={classes.input} />}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
+        <MenuItem value={2}>SEASONAL FLUE</MenuItem>
         <MenuItem value={1}>COVID-19 PANDEMIC</MenuItem>
         <MenuItem value={2}>SEASONAL VIRUS</MenuItem>
       </Select>

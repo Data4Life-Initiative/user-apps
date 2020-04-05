@@ -1,5 +1,12 @@
 import React from 'react';
-import { Container, Typography, Button } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { OpenMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,19 +37,33 @@ const useStyle = makeStyles({
     borderRadius: 18,
     backgroundColor: 'rgb(92,200,77)',
   },
+  cardContent: {
+    padding: 5,
+  },
+  actions: {
+    justifyContent: 'center',
+    padding: 5,
+  },
 });
 
-const Action = ({ actionCode }) => {
+const Action = ({ note }) => {
   const dispatch = useDispatch();
   const classes = useStyle();
   return (
-    <Button
-      variant="contained"
-      className={classes.risk}
-      onClick={() => dispatch(setActivePage('risk'))}
-    >
-      Evaluate your risk score
-    </Button>
+    <Card variant="outlined">
+      <CardContent className={classes.cardContent}>
+        <Typography>{note.msg}</Typography>
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          variant="contained"
+          className={classes.risk}
+          onClick={() => dispatch(setActivePage('risk'))}
+        >
+          Evaluate your risk score
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
@@ -56,10 +77,7 @@ const Notifications = () => {
       <Container className={classes.content}>
         <Typography className={classes.heading}>NOTIFICATIONS</Typography>
         {newNotifications.map((note) => (
-          <Container key={note.id}>
-            <Typography>{note.msg}</Typography>
-            <Action actionCode={note.actionCode} />
-          </Container>
+          <Action key={note.id} note={note} />
         ))}
       </Container>
     </Container>

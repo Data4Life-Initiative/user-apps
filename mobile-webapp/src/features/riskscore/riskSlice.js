@@ -22,7 +22,7 @@ export default slice.reducer;
 
 export const selectRiskScore = (state) => state.riskscore;
 
-const riskOracle = [2, 3.4, 5.6, 7.4];
+const riskOracle = [5.9, 7.3];
 let fetchCount = 0;
 
 export const fetchRiskScore = () => (dispatch) => {

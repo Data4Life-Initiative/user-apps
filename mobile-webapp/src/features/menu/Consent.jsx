@@ -10,11 +10,16 @@ import { selectLoginState } from './loginSlice';
 const useStyle = makeStyles({
   container: {
     padding: 0,
-  },
-  content: {
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  iframe: {
+    width: '100%',
+    height: '100%',
+    padding: 0,
+    borderStyle: 'none',
   },
 });
 
@@ -25,9 +30,10 @@ const Consent = () => {
   return (
     <Container className={classes.container}>
       <OpenMenu action={() => dispatch(toggleMain())} />
-      <Container className={classes.content}>
-        <iframe src=""></iframe>
-      </Container>
+      <iframe
+        src="http://data4life.igrant.io/"
+        className={classes.iframe}
+      ></iframe>
     </Container>
   );
 };
