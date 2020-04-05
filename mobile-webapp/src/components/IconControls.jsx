@@ -6,14 +6,14 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles({
   icon: {
-    fontSize: 68,
+    fontSize: 54,
   },
 });
 
 export const OpenMenu = (props) => {
   const classes = useStyles();
   return (
-    <IconButton onClick={props.action}>
+    <IconButton size="small" onClick={props.action}>
       <MenuIcon className={classes.icon} />
     </IconButton>
   );

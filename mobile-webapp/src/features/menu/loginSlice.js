@@ -41,7 +41,7 @@ export const logout = () => (dispatch) => {
   dispatch(unloadProfile());
 };
 
-export const confirmDebug = (mobile, otp) => (dispatch) => {
+export const confirm1 = (mobile, otp) => (dispatch) => {
   dispatch(setActivePage('home'));
 }
 

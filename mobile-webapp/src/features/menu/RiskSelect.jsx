@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     fontFamily: 'Arial',
     '&:focus': {
       borderRadius: 24,
-      //   borderColor: '#80bdff',
+      // borderColor: '#80bdff',
       //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
   },
@@ -35,7 +35,6 @@ const RiskSelect = () => {
   const classes = useStyles();
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel id="demo-customized-select-label">Age</InputLabel>
       <Select
         labelId="demo-customized-select-label"
         id="demo-customized-select"
@@ -46,6 +45,7 @@ const RiskSelect = () => {
           <em>None</em>
         </MenuItem>
         <MenuItem value={1}>COVID-19 PANDEMIC</MenuItem>
+        <MenuItem value={2}>SEASONAL VIRUS</MenuItem>
       </Select>
     </FormControl>
   );

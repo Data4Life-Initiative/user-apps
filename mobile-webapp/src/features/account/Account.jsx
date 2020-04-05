@@ -1,11 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { green, blue } from '@material-ui/core/colors';
-import { Container, Typography, Button, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
+import { Container, Typography, Button, FormControl, FormControlLabel, MenuItem, InputBase, Select, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { OpenMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
+import QRCode from 'qrcode.react';
 
 import { selectAccountDetails } from './accountSlice';
 
@@ -38,10 +39,33 @@ const useStyle = makeStyles({
   container: {
     padding: 0,
   },
+  input: {
+    borderRadius: 24,
+    position: 'relative',
+    backgroundColor: 'rgb(242,242,242)',
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    // Use the system font instead of the default Roboto font.
+    fontFamily: 'Arial',
+    '&:focus': {
+      borderRadius: 24,
+      // borderColor: '#80bdff',
+      //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+  formControl: {
+    flexGrow: 1,
+    paddingRight: 20,
+  },   
   healthyContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  qrcode: {
+    paddingTop: 6,
+    paddingBottom: 6,
   },
   content: {
     display: 'flex',
@@ -110,11 +134,11 @@ const Account = () => {
       <OpenMenu action={() => dispatch(toggleMain())} />
       <Container className={classes.content}>
         <Typography className={classes.heading}>ACCOUNT DETAILS</Typography>
+        <QRCode className={classes.qrcode} value={mobile} />          
         <Label label="YOUR MOBILE NUMBER" />
         <Button
           readOnly
           className={classes.input}
-          style={{ textDecoration: 'underline' }}
         >
           {mobile}
         </Button>
@@ -122,18 +146,24 @@ const Account = () => {
         <Button className={classes.input}>{age}</Button>
         <Label label="YOUR HEALTH STATUS" />
         <Container className={classes.healthyContainer}>
-          <FormControlLabel
-            control={<GreenCheckbox checked={state.isHealthy} onChange={handleChange} name="isHealthy" />}
-            label="Healthy"
-          />        
-          <FormControlLabel
-            control={<BlueCheckbox checked={state.hasImmunity} onChange={handleChange} name="hasImmunity" />}
-            label="Has Immunity"          
-          />
+          <FormControl className={classes.formControl}>
+            <Select
+            labelId="health-status-select-label"
+            id="health-status-select"
+            value="healthy"
+            input={<InputBase className={classes.input} />}
+            >
+              <MenuItem value="healthy">Healthy</MenuItem>
+              <MenuItem value="not_infected">Not Infected</MenuItem>
+              <MenuItem value="immunized">Immunized</MenuItem>
+              <MenuItem value="infected_with_symptom">Infected With Symptoms</MenuItem>
+              <MenuItem value="infected_without_symptom">Infected Without Symptoms</MenuItem>
+            </Select>
+          </FormControl>  
         </Container>
         <Label label="YOUR LOCATION DATA" />
         <FormControlLabel
-            control={<Checkbox checked={state.isLocationEnabled} onChange={handleChange} name="isLocationEnabled" />}
+            control={<GreenCheckbox checked={state.isLocationEnabled} onChange={handleChange} name="isLocationEnabled" />}
             label="Enabled"          
           />
         <Button variant="outlined" className={classes.history}>

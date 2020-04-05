@@ -18,6 +18,10 @@ const useStyle = makeStyles({
     backgroundColor: 'white',
     padding: 0,
   },
+  menucontainer: {
+    height: '100vh',
+    padding: 0,
+  },
   bar: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -48,7 +52,7 @@ const MenuOverlay = () => {
     );
   else
     return (
-      <Container className={classes.container}>{menus[activePage]}</Container>
+      <Container className={activePage === 'main' ? classes.menucontainer : classes.container}>{menus[activePage]}</Container>
     );
 };
 

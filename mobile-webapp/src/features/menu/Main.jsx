@@ -5,6 +5,7 @@ import { CloseMenu } from '../../components/IconControls';
 import { useDispatch } from 'react-redux';
 import { toggleMain, setActivePage } from './menuSlice';
 import { logout } from './loginSlice';
+import { Autocomplete } from '@react-google-maps/api';
 
 const useStyle = makeStyles({
   container: {
@@ -13,7 +14,11 @@ const useStyle = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'start',
+    backgroundColor: 'rgb(255, 255, 255, 0.8)',
+    borderRadius: 8,
+    width: 375,
+    marginLeft: 16
   },
   entry: {
     fontFamily: 'Arial',
