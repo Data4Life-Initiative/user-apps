@@ -12,10 +12,10 @@ const containerStyle = {
 const useStyles = makeStyles({
   app: {
     ...containerStyle,
-    width: '100%',
     height: '100%',
+    width: '100%',    
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   mapContainer: {
     ...containerStyle,

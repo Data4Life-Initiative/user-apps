@@ -35,7 +35,7 @@ const MapComponent = (props) => {
         }}
         options={{
           mapTypeControl: false,
-          zoomControl: false,
+          zoomControlOptions: { position: 8 },          
           streetViewControl: false,
           fullscreenControl: false,
         }}
