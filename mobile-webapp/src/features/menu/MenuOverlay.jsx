@@ -7,6 +7,8 @@ import Main from './Main';
 import Account from '../account/Account';
 import RiskScore from '../riskscore/RiskScore';
 import Login from './Login';
+import Consent from './Consent';
+import Notifications from './Notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowMenu, toggleMain, selectActivePage } from './menuSlice';
 
@@ -27,8 +29,8 @@ const menus = {
   main: <Main />,
   account: <Account />,
   risk: <RiskScore />,
-  // notifications: ,
-  // 'data preferences': ,
+  notifications: <Notifications />,
+  'data preferences': <Consent />,
   login: <Login />,
 };
 

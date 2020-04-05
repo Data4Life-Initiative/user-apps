@@ -39,11 +39,8 @@ const MainMenu = () => {
     <Container className={classes.container}>
       <CloseMenu action={() => dispatch(toggleMain())} />
       <Container className={classes.list}>
-        {['home', 'account'].map((e) => (
+        {['home', 'account', 'notifications', 'data preferences'].map((e) => (
           <Entry key={e} title={e} action={() => dispatch(setActivePage(e))} />
-        ))}
-        {['notifications', 'data preferences'].map((e) => (
-          <Entry key={e} title={e} action={() => {}} />
         ))}
         <Entry key="logout" title="logout" action={() => dispatch(logout())} />
       </Container>

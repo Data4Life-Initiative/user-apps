@@ -58,6 +58,9 @@ const useStyle = makeStyles({
     borderRadius: 18,
     backgroundColor: 'rgb(92,200,77)',
   },
+  healthy: {
+    backgroundColor: 'rgba(92,200,77, 0.5)',
+  },
 });
 
 const Label = ({ label }) => {
@@ -84,8 +87,10 @@ const Account = () => {
         </Button>
         <Label label="YOUR AGE" />
         <Button className={classes.input}>{age}</Button>
-        <Label label="YOUR HEALTH CONDITION" />
-        <Button className={classes.input}>Healthy</Button>
+        <Label label="YOUR HEALTH STATUS" />
+        <Button className={[classes.input, classes.healthy].join(' ')}>
+          Healthy
+        </Button>
         <Label label="YOUR LOCATION DATA" />
         <Button className={classes.input}>Enabled</Button>
         <Button variant="outlined" className={classes.history}>
