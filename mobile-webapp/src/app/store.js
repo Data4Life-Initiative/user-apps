@@ -4,6 +4,7 @@ import menuReducer from '../features/menu/menuSlice';
 import loginReducer from '../features/menu/loginSlice';
 import accountReducer from '../features/account/accountSlice';
 import riskscoreReducer from '../features/riskscore/riskSlice';
+import notificationsReducer from './notificationsSlice';
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     login: loginReducer,
     account: accountReducer,
     riskscore: riskscoreReducer,
+    notifications: notificationsReducer,
   },
 });

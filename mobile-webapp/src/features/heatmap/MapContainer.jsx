@@ -1,8 +1,13 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectHeatmapData, selectCenter } from './heatmapSlice';
-import { selectLocationHistory } from '../account/accountSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectHeatmapData,
+  selectCenter,
+  fetchHotspotData,
+} from './heatmapSlice';
+// import { selectLocationHistory } from '../account/accountSlice';
 import { selectHome } from '../account/accountSlice';
+import { selectLoginState } from '../menu/loginSlice';
 
 import * as R from 'rambda';
 
@@ -17,10 +22,18 @@ const MapComponent = (props) => {
     googleMapsApiKey: 'AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg',
     libraries,
   });
-  // const data = useSelector(selectHeatmapData);
-  const data = useSelector(selectLocationHistory());
+  const data = useSelector(selectHeatmapData);
   const home = useSelector(selectHome);
   const center = useSelector(selectCenter);
+
+  const { access_token } = useSelector(selectLoginState);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (access_token && dispatch) {
+      dispatch(fetchHotspotData(access_token));
+    }
+  }, [dispatch, access_token]);
+
   const mapCenter = home ? home : center;
   const renderMap = () => {
     const { google } = window;

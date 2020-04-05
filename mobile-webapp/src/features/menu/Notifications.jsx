@@ -5,7 +5,10 @@ import { OpenMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
 
-import { selectLoginState } from './loginSlice';
+import {
+  selectNewNotifactions,
+  updateNotifiactionStatus,
+} from '../../app/notificationsSlice';
 
 const useStyle = makeStyles({
   container: {
@@ -20,17 +23,44 @@ const useStyle = makeStyles({
     fontFamily: ['Arial'],
     fontSize: 30,
   },
+  risk: {
+    fontSize: 14,
+    marginTop: 5,
+    fontFamily: ['Arial'],
+    borderRadius: 18,
+    backgroundColor: 'rgb(92,200,77)',
+  },
 });
+
+const Action = ({ actionCode }) => {
+  const dispatch = useDispatch();
+  const classes = useStyle();
+  return (
+    <Button
+      variant="contained"
+      className={classes.risk}
+      onClick={() => dispatch(setActivePage('risk'))}
+    >
+      Evaluate your risk score
+    </Button>
+  );
+};
 
 const Notifications = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
-  const { access_token } = useSelector(selectLoginState);
+  const newNotifications = useSelector(selectNewNotifactions);
   return (
     <Container className={classes.container}>
       <OpenMenu action={() => dispatch(toggleMain())} />
       <Container className={classes.content}>
         <Typography className={classes.heading}>NOTIFICATIONS</Typography>
+        {newNotifications.map((note) => (
+          <Container key={note.id}>
+            <Typography>{note.msg}</Typography>
+            <Action actionCode={note.actionCode} />
+          </Container>
+        ))}
       </Container>
     </Container>
   );
