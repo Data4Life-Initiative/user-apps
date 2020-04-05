@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Typography, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { green, blue } from '@material-ui/core/colors';
+import { Container, Typography, Button, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { OpenMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +13,35 @@ const borderRadius = 18;
 const width = '80%';
 const lineHeight = 2.2;
 
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
+
+const BlueCheckbox = withStyles({
+  root: {
+    color: blue[400],
+    '&$checked': {
+      color: blue[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
+
+
 const useStyle = makeStyles({
   container: {
     padding: 0,
+  },
+  healthyContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   content: {
     display: 'flex',
@@ -32,7 +60,6 @@ const useStyle = makeStyles({
   },
   input: {
     borderRadius,
-    backgroundColor: 'rgb(241,241,241)',
     fontFamily: ['Arial'],
     fontSize: 16,
     pointerEvents: 'none',
@@ -56,10 +83,7 @@ const useStyle = makeStyles({
     marginTop: 20,
     fontFamily: ['Arial'],
     borderRadius: 18,
-    backgroundColor: 'rgb(92,200,77)',
-  },
-  healthy: {
-    backgroundColor: 'rgba(92,200,77, 0.5)',
+    // backgroundColor: 'rgb(92,200,77)',
   },
 });
 
@@ -72,6 +96,15 @@ const Account = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
   const { mobile, age } = useSelector(selectAccountDetails);
+  const [state, setState] = React.useState({
+    isHealthy: true,
+    hasImmunity: false
+  });  
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
   return (
     <Container className={classes.container}>
       <OpenMenu action={() => dispatch(toggleMain())} />
@@ -88,16 +121,27 @@ const Account = () => {
         <Label label="YOUR AGE" />
         <Button className={classes.input}>{age}</Button>
         <Label label="YOUR HEALTH STATUS" />
-        <Button className={[classes.input, classes.healthy].join(' ')}>
-          Healthy
-        </Button>
+        <Container className={classes.healthyContainer}>
+          <FormControlLabel
+            control={<GreenCheckbox checked={state.isHealthy} onChange={handleChange} name="isHealthy" />}
+            label="Healthy"
+          />        
+          <FormControlLabel
+            control={<BlueCheckbox checked={state.hasImmunity} onChange={handleChange} name="hasImmunity" />}
+            label="Has Immunity"          
+          />
+        </Container>
         <Label label="YOUR LOCATION DATA" />
-        <Button className={classes.input}>Enabled</Button>
+        <FormControlLabel
+            control={<Checkbox checked={state.isLocationEnabled} onChange={handleChange} name="isLocationEnabled" />}
+            label="Enabled"          
+          />
         <Button variant="outlined" className={classes.history}>
           Historic Locations
         </Button>
         <Button
           variant="contained"
+          color="primary"
           className={classes.risk}
           onClick={() => dispatch(setActivePage('risk'))}
         >

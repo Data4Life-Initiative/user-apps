@@ -18,10 +18,29 @@ const useStyle = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
   text: {
     fontFamily: 'Arial',
     fontSize: 30,
+    paddingBottom: 18,
+    width: '80%'
   },
+  otptext: {
+    width: '80%',
+    fontFamily: 'Arial',
+    fontSize: 30,
+    paddingBottom: 18,
+  },
+  button: {
+    width: '40%',
+    borderRadius: 18,
+    marginLeft: 6,
+    marginRight: 6,
+  }  
 });
 
 const Login = () => {
@@ -39,7 +58,7 @@ const Login = () => {
         value={mobile}
         onChange={(e) => setMobile(e.target.value)}
       />
-      <Button className={classes.text} onClick={() => dispatch(login(mobile))}>
+      <Button variant="contained" color="primary" size="medium" className={classes.button} onClick={() => dispatch(login(mobile))}>
         Login
       </Button>
     </Fragment>
@@ -48,21 +67,27 @@ const Login = () => {
   const renderConfirm = () => (
     <Fragment>
       <TextField
-        className={classes.text}
+        className={classes.otptext}
         required
         label="OTP"
         value={otp}
         onChange={(e) => setOtp(e.target.value)}
       />
-      <Button
-        className={classes.text}
-        onClick={() => dispatch(confirm(mobile, otp))}
-      >
-        Confirm
-      </Button>
-      <Button className={classes.text} onClick={() => dispatch(logout())}>
-        Cancel
-      </Button>
+      <Container className={classes.buttonContainer}>
+        <Button
+          variant="contained" color="primary" size="medium"
+          className={classes.button}
+          onClick={() => dispatch(confirm(mobile, otp))}
+        >
+          Confirm
+        </Button>
+        <Button 
+          variant="contained" size="medium"
+          className={classes.button} 
+          onClick={() => dispatch(logout())}>
+          Cancel
+        </Button>
+      </Container>
     </Fragment>
   );
 

@@ -41,6 +41,10 @@ export const logout = () => (dispatch) => {
   dispatch(unloadProfile());
 };
 
+export const confirmDebug = (mobile, otp) => (dispatch) => {
+  dispatch(setActivePage('home'));
+}
+
 export const confirm = (mobile, otp) => (dispatch) => {
   const { update } = slice.actions;
   dispatch(update({ working: true }));
