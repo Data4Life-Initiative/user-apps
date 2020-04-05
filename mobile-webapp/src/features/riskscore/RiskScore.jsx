@@ -41,7 +41,7 @@ const RiskScore = () => {
   const { riskScore, working } = risk;
   return (
     <Container className={classes.container}>
-      <CloseMenu action={() => dispatch(setActivePage('account'))} />
+      <CloseMenu action={() => dispatch(setActivePage('home'))} />
       {working ? (
         <Container className={classes.spinner}>
           <CircularProgress />
