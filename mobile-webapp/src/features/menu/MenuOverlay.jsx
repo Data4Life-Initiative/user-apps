@@ -46,7 +46,7 @@ const MenuOverlay = () => {
   if (!showMenu)
     return (
       <Container className={classes.bar}>
-        <OpenMenu action={() => dispatch(toggleMain())} />;
+        <OpenMenu action={() => dispatch(toggleMain())} />
         <RiskSelect />
       </Container>
     );

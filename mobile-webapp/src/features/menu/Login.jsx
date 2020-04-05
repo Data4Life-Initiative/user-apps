@@ -9,6 +9,7 @@ import {
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, confirm, selectLoginState } from './loginSlice';
+import OtpInput from 'react-otp-input';
 
 const useStyle = makeStyles({
   container: {
@@ -24,6 +25,12 @@ const useStyle = makeStyles({
     width: 150,    
     marginTop: -100,
   },
+  otpheading: {
+    padding: 8,
+    textAlign: 'center',
+    fontFamily: ['Arial'],
+    fontSize: 16,
+  },
   heading: {
     fontFamily: ['Arial'],
     fontSize: 22,
@@ -31,6 +38,7 @@ const useStyle = makeStyles({
     marginBottom: 100
   },
   buttonContainer: {
+    paddingTop: 18,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -58,11 +66,15 @@ const useStyle = makeStyles({
 });
 
 const Login = () => {
+  const OTP_LENGTH = 6;
   const dispatch = useDispatch();
   const classes = useStyle();
   const { awaitingOtp, working } = useSelector(selectLoginState);
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
+  const handleOtpChange = otp => {
+    setOtp(otp);
+  };  
   const renderLogin = () => (
     <Fragment>
       <TextField
@@ -73,7 +85,7 @@ const Login = () => {
         autoFocus
         onChange={(e) => setMobile(e.target.value)}
       />
-      <Button variant="contained" color="primary" size="medium" className={classes.button} onClick={() => dispatch(login(mobile))}>
+      <Button disabled={ mobile.trim().length === 0 } variant="contained" color="primary" size="medium" className={classes.button} onClick={() => dispatch(login(mobile))}>
         Login
       </Button>
     </Fragment>
@@ -81,16 +93,28 @@ const Login = () => {
 
   const renderConfirm = () => (
     <Fragment>
-      <TextField
-        className={classes.otptext}
-        required
-        label="OTP"
-        value={otp}
-        autoFocus
-        onChange={(e) => setOtp(e.target.value)}
-      />
+        <Typography className={classes.otpheading}>OTP</Typography>
+        <OtpInput        
+          inputStyle={{
+            width: '1.5rem',
+            height: '1.5rem',
+            margin: '0 0.25rem',
+            fontSize: 16,
+            borderRadius: 4,
+            border: '1px solid rgba(0,0,0,0.3)',
+          }}     
+          focusStyle={{
+            outline: 'none'
+          }}
+          value={otp}
+          onChange={handleOtpChange}     
+          shouldAutoFocus={true}          
+          numInputs={OTP_LENGTH}
+          separator={<span>-</span>}
+        />      
       <Container className={classes.buttonContainer}>
         <Button
+          disabled={ otp.length < OTP_LENGTH}
           variant="contained" color="primary" size="medium"
           className={classes.button}
           onClick={() => dispatch(confirm(mobile, otp))}

@@ -3,9 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { green, blue } from '@material-ui/core/colors';
 import { Container, Typography, Button, FormControl, FormControlLabel, MenuItem, InputBase, Select, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { OpenMenu } from '../../components/IconControls';
+import { CloseMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
+import StyledSelect from '../../components/StyledSelect' 
 import QRCode from 'qrcode.react';
 
 import { selectAccountDetails } from './accountSlice';
@@ -24,41 +25,25 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const BlueCheckbox = withStyles({
-  root: {
-    color: blue[400],
-    '&$checked': {
-      color: blue[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
-
 const useStyle = makeStyles({
   container: {
     padding: 0,
   },
-  input: {
-    borderRadius: 24,
-    position: 'relative',
-    backgroundColor: 'rgb(242,242,242)',
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    // Use the system font instead of the default Roboto font.
-    fontFamily: 'Arial',
+  dropdowninput: {
     '&:focus': {
-      borderRadius: 24,
-      // borderColor: '#80bdff',
-      //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
+      backgroundColor: 'rgb(255,255,255)',
+    }
+  },
+  dropdownselect: {
+    width: width,
   },
   formControl: {
     flexGrow: 1,
-    paddingRight: 20,
+    alignItems: 'center'
   },   
   healthyContainer: {
+    padding: 0,
+    paddingTop: 12,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
@@ -72,13 +57,21 @@ const useStyle = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  header: {
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'row',
+  },
   heading: {
+    padding: 8,
+    textAlign: 'center',
+    flex: 1,
     fontFamily: ['Arial'],
     fontSize: 30,
   },
   label: {
     marginTop: 15,
-    color: 'rgb(200,200,200)',
+    color: 'rgb(150,150,150)',
     fontFamily: ['Arial'],
     fontSize: 14,
   },
@@ -122,43 +115,56 @@ const Account = () => {
   const { mobile, age } = useSelector(selectAccountDetails);
   const [state, setState] = React.useState({
     isHealthy: true,
-    hasImmunity: false
+    hasImmunity: false,
+    healthStatus: 'healthy'
   });  
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const handleSelectChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
+
   return (
     <Container className={classes.container}>
-      <OpenMenu action={() => dispatch(toggleMain())} />
-      <Container className={classes.content}>
+      <Container className={classes.header}>
+        <CloseMenu action={() => dispatch(setActivePage('home'))} />
         <Typography className={classes.heading}>ACCOUNT DETAILS</Typography>
-        <QRCode className={classes.qrcode} value={mobile} />          
+      </Container>
+      <Container className={classes.content}>        
+        <QRCode 
+          size={100}
+          className={classes.qrcode} value={mobile || ''} 
+        />          
         <Label label="YOUR MOBILE NUMBER" />
         <Button
           readOnly
           className={classes.input}
         >
-          {mobile}
+          {mobile || ''}
         </Button>
         <Label label="YOUR AGE" />
-        <Button className={classes.input}>{age}</Button>
+        <Button className={classes.input}>{age || ''}</Button>
         <Label label="YOUR HEALTH STATUS" />
         <Container className={classes.healthyContainer}>
           <FormControl className={classes.formControl}>
-            <Select
+            <StyledSelect
             labelId="health-status-select-label"
             id="health-status-select"
-            value="healthy"
-            input={<InputBase className={classes.input} />}
+            name="healthStatus"
+            value={state.healthStatus}
+            onChange={handleSelectChange}
+            className={classes.dropdownselect}
+            input={<InputBase/>}
             >
               <MenuItem value="healthy">Healthy</MenuItem>
               <MenuItem value="not_infected">Not Infected</MenuItem>
               <MenuItem value="immunized">Immunized</MenuItem>
               <MenuItem value="infected_with_symptom">Infected With Symptoms</MenuItem>
               <MenuItem value="infected_without_symptom">Infected Without Symptoms</MenuItem>
-            </Select>
+            </StyledSelect>
           </FormControl>  
         </Container>
         <Label label="YOUR LOCATION DATA" />

@@ -9,22 +9,9 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
+import StyledSelect from '../../components/StyledSelect' 
+
 const useStyles = makeStyles({
-  input: {
-    borderRadius: 24,
-    position: 'relative',
-    backgroundColor: 'rgb(242,242,242)',
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    // Use the system font instead of the default Roboto font.
-    fontFamily: 'Arial',
-    '&:focus': {
-      borderRadius: 24,
-      // borderColor: '#80bdff',
-      //   boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
   formControl: {
     flexGrow: 1,
     paddingRight: 20,
@@ -33,18 +20,25 @@ const useStyles = makeStyles({
 
 const RiskSelect = () => {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    riskType: 'covid-19'
+  });  
+  const handleSelectChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
   return (
     <FormControl className={classes.formControl}>
-      <Select
+      <StyledSelect
         labelId="demo-customized-select-label"
         id="demo-customized-select"
-        value={1}
-        input={<InputBase className={classes.input} />}
+        name="riskType"
+        onChange={handleSelectChange}
+        value={state.riskType}
+        input={<InputBase />}
       >
-        <MenuItem value={2}>SEASONAL FLUE</MenuItem>
-        <MenuItem value={1}>COVID-19 PANDEMIC</MenuItem>
-        <MenuItem value={2}>SEASONAL VIRUS</MenuItem>
-      </Select>
+        <MenuItem value="covid-19">COVID-19 PANDEMIC</MenuItem>
+        <MenuItem value="seasonal-flu">SEASONAL FLU</MenuItem>
+      </StyledSelect>
     </FormControl>
   );
 };

@@ -22,7 +22,7 @@ export const OpenMenu = (props) => {
 export const CloseMenu = (props) => {
   const classes = useStyles();
   return (
-    <IconButton onClick={props.action}>
+    <IconButton size="small" onClick={props.action}>
       <CloseIcon className={classes.icon} />
     </IconButton>
   );

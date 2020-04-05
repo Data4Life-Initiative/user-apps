@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { OpenMenu } from '../../components/IconControls';
+import { CloseMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
 
@@ -29,7 +29,7 @@ const Consent = () => {
   const { access_token } = useSelector(selectLoginState);
   return (
     <Container className={classes.container}>
-      <OpenMenu action={() => dispatch(toggleMain())} />
+      <CloseMenu action={() => dispatch(setActivePage('home'))} />
       <iframe
         src="http://data4life.igrant.io/"
         className={classes.iframe}
