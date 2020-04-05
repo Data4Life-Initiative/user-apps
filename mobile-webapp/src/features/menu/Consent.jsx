@@ -15,11 +15,6 @@ const useStyle = makeStyles({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  content: {
-    display: 'flex',
-    flexGrow: 1,
-    padding: 0,
-  },
   iframe: {
     width: '100%',
     height: '100%',
@@ -35,12 +30,10 @@ const Consent = () => {
   return (
     <Container className={classes.container}>
       <OpenMenu action={() => dispatch(toggleMain())} />
-      <Container className={classes.content}>
-        <iframe
-          src="http://data4life.igrant.io/"
-          className={classes.iframe}
-        ></iframe>
-      </Container>
+      <iframe
+        src="http://data4life.igrant.io/"
+        className={classes.iframe}
+      ></iframe>
     </Container>
   );
 };
