@@ -8,13 +8,13 @@ import * as R from 'rambda';
 
 import { GoogleMap, useLoadScript, HeatmapLayer } from '@react-google-maps/api';
 
-import { apiKey } from './privateApiKey';
+// import { apiKey } from './privateApiKey';
 
 const libraries = ['places', 'visualization'];
 
 const MapComponent = (props) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: apiKey, //'AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg',
+    googleMapsApiKey: 'AIzaSyAK1IYua9oUx47u1mlHFWO_gTMisITDIFg',
     libraries,
   });
   // const data = useSelector(selectHeatmapData);
