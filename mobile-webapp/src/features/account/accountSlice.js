@@ -37,6 +37,14 @@ export const slice = createSlice({
 
 export const { profileLoaded, unloadProfile } = slice.actions;
 
+export const selectAccountDetails = (state) => {
+  const { profile } = state.account;
+  return {
+    age: profile.age,
+    mobile: profile.mobile,
+  };
+};
+
 export const selectHome = (state) => {
   const { profile } = state.account;
   return profile.home

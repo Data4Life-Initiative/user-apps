@@ -5,6 +5,7 @@ import { OpenMenu } from '../../components/IconControls';
 import RiskSelect from './RiskSelect';
 import Main from './Main';
 import Account from '../account/Account';
+import RiskScore from '../riskscore/RiskScore';
 import Login from './Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowMenu, toggleMain, selectActivePage } from './menuSlice';
@@ -12,7 +13,7 @@ import { selectShowMenu, toggleMain, selectActivePage } from './menuSlice';
 const useStyle = makeStyles({
   container: {
     height: '100vh',
-    backgroundColor: 'rgb(242,242,242)',
+    backgroundColor: 'white',
     padding: 0,
   },
   bar: {
@@ -25,6 +26,7 @@ const useStyle = makeStyles({
 const menus = {
   main: <Main />,
   account: <Account />,
+  risk: <RiskScore />,
   // notifications: ,
   // 'data preferences': ,
   login: <Login />,
