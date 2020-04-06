@@ -31,7 +31,7 @@ const Consent = () => {
     <Container className={classes.container}>
       <CloseMenu action={() => dispatch(setActivePage('home'))} />
       <iframe
-        src="http://data4life.igrant.io/"
+        src="https://data4life.igrant.io/"
         className={classes.iframe}
       ></iframe>
     </Container>

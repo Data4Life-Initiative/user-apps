@@ -17,7 +17,7 @@ const useStyle = makeStyles({
     alignItems: 'start',
     backgroundColor: 'rgb(255, 255, 255, 0.9)',
     borderRadius: 8,
-    width: 300,
+    width: 315,
     marginLeft: 16
   },
   entry: {
