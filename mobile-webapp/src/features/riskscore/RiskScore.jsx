@@ -4,8 +4,9 @@ import { makeStyles } from '@material-ui/styles';
 import { CloseMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
+import { selectLoginState } from '../menu/loginSlice';
 import GaugeChart from 'react-gauge-chart'
-import { selectRiskScore, fetchRiskScore } from './riskSlice';
+import { selectRiskScore, fetchRiskScore, fetchRiskDetails } from './riskSlice';
 
 const borderRadius = 18;
 const width = '80%';
@@ -29,14 +30,16 @@ const useStyle = makeStyles({
     fontFamily: ['Arial'],
     fontSize: 30,
   },
-  headingMedium: {
+  headingRecommendation: {
     fontFamily: ['Arial'],
     fontSize: 24,
+    textAlign: 'center'
   },
-  headingSmall: {
+  headingRecommendationDetails: {
     fontFamily: ['Arial'],
     fontSize: 16,
-    paddingBottom: 12
+    paddingBottom: 12,
+    textAlign: 'justify'
   },
   guage: {
     width: 400,
@@ -72,47 +75,54 @@ const useStyle = makeStyles({
 
 const RiskScore = () => {
   const dispatch = useDispatch();
-  const classes = useStyle();
   const risk = useSelector(selectRiskScore);
-
+  const classes = useStyle();
+  const { access_token } = useSelector(selectLoginState);
+  
   useEffect(() => {
-    dispatch(fetchRiskScore('--add access token here--'));
+    dispatch(fetchRiskDetails(access_token));
+    dispatch(fetchRiskScore(access_token));
   }, [dispatch]);
 
-  const { riskScore, working } = risk;
+  const { riskScore, working, initing, riskPadding, riskValues } = risk;
 
-  let isHighRisk = riskScore > 5.5;
+  let paddedRiskScore = Math.min(riskScore + riskPadding, 9.99);
+
+  const riskPercent = paddedRiskScore / 10;
+
+  let recommendation = '';
+  let recommendationDet = '';
+
+  for (const riskOpt of Object.keys(riskValues)) {
+    let risk = riskValues[riskOpt];
+    if (risk) {
+      if ((paddedRiskScore >= risk.lower_limit) && (paddedRiskScore <= risk.upper_limit)) {
+        recommendation = risk.recommendation;
+        recommendationDet = risk.recommendation_detail;
+        break;
+      }
+    }
+  }
+
+  let isGetTest = recommendation.toLowerCase() === 'Get yourself tested'.toLowerCase();
   
-  let recommendation = isHighRisk ? 'Get Yourself Tested' : 'Self Quarantine';
-  let recommendationDetLow = 'Based on your health profile and based on your contact tracing record, you are perceived to be at lower risk of infected.'
-  let recommendationSuggestLow = 'We recommend you to stay indoors and self quarantine.';
-  let recommendationDetHigh = 'Based on your health profile and based on your contact tracing record, you are perceived to be at higher risk of infected.';
-  let recommendationSuggestHigh = 'We recommend you to get tested.';
-
-  const [state, setState] = React.useState({
-    riskPercent: 0
-  });
-  setTimeout(() => {
-    setState({riskPercent: riskScore / 10});
-  }, 0);
-
   return (
     <Container className={classes.container}>
       <CloseMenu action={() => dispatch(setActivePage('home'))} />
-      {working ? (
+      {(working || initing) ? (
         <Container className={classes.spinner}>
           <CircularProgress />
         </Container>
       ) : (
         <Container className={classes.content}>
           <Typography className={classes.heading}>
-            RISK SCORE: {riskScore}
+            RISK SCORE: {paddedRiskScore}
           </Typography>
           <Container className={classes.guage}>
             <GaugeChart 
             id="risk-score-chart" 
             nrOfLevels={5}
-            percent={state.riskPercent}
+            percent={riskPercent}
             arcPadding={0}
             textColor="#000"
             hideText={true}
@@ -122,20 +132,17 @@ const RiskScore = () => {
           </Container>         
           <Container className={classes.content}>
             <Label label="RECOMMENDATION:" />
-            <Typography className={classes.headingMedium}>
+            <Typography className={classes.headingRecommendation}>
               {recommendation}
             </Typography>
             <p/>
             <p/>
             <Container className={classes.content}>
-              <Typography className={classes.headingSmall}>
-                {isHighRisk ? recommendationDetHigh : recommendationDetLow}
-              </Typography>
-              <Typography className={classes.headingSmall}>
-                {isHighRisk ? recommendationSuggestHigh : recommendationSuggestLow}
+              <Typography className={classes.headingRecommendationDetails}>
+                {recommendationDet}
               </Typography>
               {
-                isHighRisk &&
+                isGetTest &&
                 (
                   <Button
                   variant="contained"

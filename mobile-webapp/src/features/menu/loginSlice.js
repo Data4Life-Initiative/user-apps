@@ -51,11 +51,9 @@ export const confirm = (mobile, otp) => (dispatch) => {
   axios
     .post(`${endpoint}/verify/citizen`, { mobile, otp })
     .then((res) => {
-      console.log(res);
       const { status, data } = res;
       if (status === 200) {
         const { access_token, profile } = data.data;
-        console.log(data);
         dispatch(profileLoaded(profile));
         dispatch(update({ access_token, working: false, loggedIn: true }));
         dispatch(setActivePage('home'));

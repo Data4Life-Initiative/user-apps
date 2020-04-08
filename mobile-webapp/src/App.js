@@ -17,7 +17,6 @@ import { setActivePage } from './features/menu/menuSlice';
 // />
 
 const containerStyle = {
-  maxWidth: '100%',
   padding: 0,
 };
 
@@ -34,13 +33,16 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   bar: {
+    ...containerStyle,
     position: 'absolute',
     padding: 0,
   },
   footer: {
+    ...containerStyle,
     position: 'absolute',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     bottom: 0,
-    left: 0,
     padding: 0,
     width: '100%',
     display: 'flex',

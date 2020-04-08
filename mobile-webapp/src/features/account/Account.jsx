@@ -10,6 +10,7 @@ import StyledSelect from '../../components/StyledSelect'
 import QRCode from 'qrcode.react';
 
 import { selectAccountDetails } from './accountSlice';
+import { setRiskPadding } from '../riskscore/riskSlice';
 
 const borderRadius = 18;
 const width = '80%';
@@ -180,7 +181,7 @@ const Account = () => {
           variant="contained"
           color="primary"
           className={classes.risk}
-          onClick={() => dispatch(setActivePage('risk'))}
+          onClick={() => {dispatch(setRiskPadding(0));dispatch(setActivePage('risk'))}}
         >
           Evaluate your risk score
         </Button>

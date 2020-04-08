@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/styles';
 import { CloseMenu } from '../../components/IconControls';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMain, setActivePage } from '../menu/menuSlice';
+import { setRiskPadding } from '../riskscore/riskSlice';
 
 import {
   selectNewNotifactions,
@@ -67,7 +68,7 @@ const Action = ({ note }) => {
         <Button
           variant="contained"
           className={classes.risk}
-          onClick={() => dispatch(setActivePage('risk'))}
+          onClick={() => {dispatch(setRiskPadding(2)); dispatch(setActivePage('risk'))}}
         >
           Evaluate your risk score
         </Button>
