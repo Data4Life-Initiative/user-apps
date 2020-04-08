@@ -10,14 +10,15 @@ import { selectLoginState } from './loginSlice';
 const useStyle = makeStyles({
   container: {
     padding: 0,
-    height: '100vh',
+    height: window.innerHeight,
+    width: window.innerWidth,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
   iframe: {
+    flex: 1,
     width: '100%',
-    height: '100%',
     padding: 0,
     borderStyle: 'none',
   },
