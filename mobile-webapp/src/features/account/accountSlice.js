@@ -41,7 +41,7 @@ export const selectAccountDetails = (state) => {
   const { profile } = state.account;
   return {
     age: profile.age,
-    mobile: profile.mobile,
+    mobile: profile.mobile
   };
 };
 

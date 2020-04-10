@@ -23,8 +23,8 @@ const containerStyle = {
 const useStyles = makeStyles({
   app: {
     ...containerStyle,
-    height: '100%',
-    width: '100%',    
+    height: window.innerHeight,
+    width: window.innerWidth,    
     display: 'flex',
     flexDirection: 'row',
   },
@@ -44,7 +44,6 @@ const useStyles = makeStyles({
     marginRight: 'auto',
     bottom: 0,
     padding: 0,
-    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     height: 100,
