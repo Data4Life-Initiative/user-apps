@@ -26,7 +26,7 @@ const useStyle = makeStyles({
   logo: {
     height: 150,
     width: 150,    
-    marginTop: -100,
+    marginTop: -75,
   },
   otpheading: {
     padding: 8,
@@ -38,7 +38,7 @@ const useStyle = makeStyles({
     fontFamily: ['Arial'],
     fontSize: 22,
     fontWeight: 600,    
-    marginBottom: 100
+    marginBottom: 75
   },
   buttonContainer: {
     paddingTop: 18,

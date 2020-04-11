@@ -97,7 +97,7 @@ export const slice = createSlice({
       title: 'Do you live or work in a care facility?',
       type: 'question',
       description: 'This includes a hospital, emergency room, other medical setting, or long-term facility. Select all that apply.',
-      multiple: false,
+      multiple: true,
       items: [
         'I live in a long-term care facility that includes nursing homes or assisted living.',
         'I have worked in a hospital or other care facility in the past 14 days. This includes volunteering.',

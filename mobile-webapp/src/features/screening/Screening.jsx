@@ -88,7 +88,7 @@ const useStyle = makeStyles({
     padding: 4,
     textAlign: 'left',
     fontFamily: ['Arial'],    
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 600,
     lineHeight: 1.2,    
   },
@@ -96,12 +96,14 @@ const useStyle = makeStyles({
     padding: 4,
     textAlign: 'left',
     fontFamily: ['Arial'],    
-    fontSize: 18,
+    fontSize: 16,
   },
   'question-list': {
     marginTop: 12,
     backgroundColor: 'white',
-    borderRadius: 18
+    borderRadius: 18,
+    overflow: 'auto',
+    marginBottom: 12,
   },
   'question-listitem': {
     '&:not(:last-child)': {
@@ -135,7 +137,7 @@ const Screening = () => {
   const classes = useStyle();
   const screening = useSelector(selectScreeningDetails);
   const [screeningPage, setScreeningPage] = useState(0);
-  const [answers, setAnswer] = useState({});
+  const [answers, setAnswer] = useState(null);
   const [isGoBackEnabled, setGoBackEnabled] = useState(false);
   const [isPageHeaderEnabled, setPageHeaderEnabled] = useState(false);
   const [pageHeading, setPageHeading] = useState('');
@@ -158,7 +160,7 @@ const Screening = () => {
     } else {
       //remove the item from the list of answers
       if(indexOfItem > -1) {
-        let removed = answers[event.target.name].splice(indexOfItem, 1);
+        answers[event.target.name].splice(indexOfItem, 1);
         setAnswer({ ...answers, [event.target.name]:  answers[event.target.name] });
       }
     }
@@ -182,16 +184,16 @@ const Screening = () => {
   }, [screeningPage]);
 
   useEffect(() => {
-    for(const item of screening.questionPages) {
-      let emptyAnswers = {};
+    let emptyAnswers = {};
+    for(const item of screening.questionPages) {      
       if(item.type === 'question') {
         emptyAnswers[item.title] = null;
         if(item.multiple) {
           emptyAnswers[item.title] = [];
         }
-      }
-      setAnswer(emptyAnswers);
+      }      
     }
+    setAnswer(emptyAnswers);
   }, [screening]);
 
   const generateQuestionList = (questionPage) => {
@@ -210,7 +212,7 @@ const Screening = () => {
           questionPage.type === 'question' && (
             questionPage.multiple ? (
               <Checkbox
-                checked={answers[questionPage.title] && answers[questionPage.title].indexOf(item) > -1}
+                checked={answers[questionPage.title].indexOf(item) > -1}
                 icon={<CircleUnchecked />}
                 name={questionPage.title}
                 value={item}
@@ -233,8 +235,6 @@ const Screening = () => {
       )
     });
   }
-
-
 
   const getScreeningContent = (pageNumber) => {
     if (pageNumber === 0) {
@@ -274,7 +274,7 @@ const Screening = () => {
               ) : ''
             }
               <List className={classes[questionPage.type + '-list']} dense={true}>
-                {generateQuestionList(questionPage)}
+                { generateQuestionList(questionPage) }
               </List>            
           </Container>
           <Button
@@ -292,27 +292,26 @@ const Screening = () => {
     }
   }
 
-  // start screening process
-  //setScreeningPage(0);
-
   return (
-    <Container className={classes.container}>
-      <Container className={classes.header}>
-        <Box visibility={isGoBackEnabled ? 'visible' : 'hidden'}>
-          <IconButton  className={classes.iconbutton} onClick={() => {setScreeningPage(screeningPage - 1)}}>
-            <ArrowBackIosIcon className={classes.icon} />
-            <Typography className={classes.backbutton}>Back</Typography>
+      answers && (
+      <Container className={classes.container}>
+        <Container className={classes.header}>
+          <Box visibility={isGoBackEnabled ? 'visible' : 'hidden'}>
+            <IconButton  className={classes.iconbutton} onClick={() => {setScreeningPage(screeningPage - 1)}}>
+              <ArrowBackIosIcon className={classes.icon} />
+              <Typography className={classes.backbutton}>Back</Typography>
+            </IconButton>
+          </Box>  
+          <Box visibility={isPageHeaderEnabled ? 'visible' : 'hidden'}>
+            <Typography className={classes.pageheading}>{pageHeading}</Typography>
+          </Box>  
+          <IconButton className={classes.iconbutton} onClick={() => dispatch(setActivePage('account'))}>
+          <Typography className={classes.cancelbutton}>Cancel</Typography>
           </IconButton>
-        </Box>  
-        <Box visibility={isPageHeaderEnabled ? 'visible' : 'hidden'}>
-          <Typography className={classes.pageheading}>{pageHeading}</Typography>
-        </Box>  
-        <IconButton className={classes.iconbutton} onClick={() => dispatch(setActivePage('account'))}>
-        <Typography className={classes.cancelbutton}>Cancel</Typography>
-        </IconButton>
+        </Container>
+        {getScreeningContent(screeningPage)}
       </Container>
-      {getScreeningContent(screeningPage)}
-    </Container>
+      )
   );
 };
 
