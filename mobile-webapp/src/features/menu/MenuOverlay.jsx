@@ -6,6 +6,7 @@ import RiskSelect from './RiskSelect';
 import Main from './Main';
 import Account from '../account/Account';
 import RiskScore from '../riskscore/RiskScore';
+import Screening from '../screening/Screening';
 import Login from './Login';
 import Consent from './Consent';
 import Notifications from './Notifications';
@@ -33,6 +34,7 @@ const menus = {
   main: <Main />,
   account: <Account />,
   risk: <RiskScore />,
+  screening: <Screening />,
   notifications: <Notifications />,
   'data preferences': <Consent />,
   login: <Login />,

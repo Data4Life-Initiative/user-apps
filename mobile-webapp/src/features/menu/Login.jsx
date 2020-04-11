@@ -10,11 +10,14 @@ import { makeStyles } from '@material-ui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, confirm, selectLoginState } from './loginSlice';
 import OtpInput from 'react-otp-input';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const useStyle = makeStyles({
   container: {
     padding: 0,
-    height: '100%',
+    height: window.innerHeight,
+    width: window.innerWidth,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -23,7 +26,7 @@ const useStyle = makeStyles({
   logo: {
     height: 150,
     width: 150,    
-    marginTop: -100,
+    marginTop: -75,
   },
   otpheading: {
     padding: 8,
@@ -35,7 +38,7 @@ const useStyle = makeStyles({
     fontFamily: ['Arial'],
     fontSize: 22,
     fontWeight: 600,    
-    marginBottom: 100
+    marginBottom: 75
   },
   buttonContainer: {
     paddingTop: 18,
@@ -70,22 +73,42 @@ const Login = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
   const { awaitingOtp, working } = useSelector(selectLoginState);
+  const [formatMobile, setFormatMobile] = useState('');
   const [mobile, setMobile] = useState('');
+  const [rawMobile, setRawMobile] = useState('');
   const [otp, setOtp] = useState('');
+  const handleMobileChange = (mobile, data, event) => {
+    let rawMobileNum = mobile.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
+    setRawMobile(rawMobileNum)
+    setFormatMobile(mobile);
+    setMobile(`+${data.dialCode}${rawMobileNum}`);
+  };  
   const handleOtpChange = otp => {
     setOtp(otp);
   };  
   const renderLogin = () => (
     <Fragment>
-      <TextField
-        className={classes.text}
-        required
-        label="Mobile"
-        value={mobile}
-        autoFocus
-        onChange={(e) => setMobile(e.target.value)}
-      />
-      <Button disabled={ mobile.trim().length === 0 } variant="contained" color="primary" size="medium" className={classes.button} onClick={() => dispatch(login(mobile))}>
+      <Typography className={classes.otpheading}>Mobile</Typography>
+      <PhoneInput
+        containerStyle={{
+            width: 'auto',
+            marginBottom: 18            
+        }}
+        value={formatMobile}
+        country={'se'}
+        onlyCountries={['se', 'de', 'in']}
+        preserveOrder={['onlyCountries']}
+        countryCodeEditable={false}
+        placeholder="Mobile"
+        
+        onChange={handleMobileChange}
+        inputProps={{
+          name: 'mobile',
+          required: true,
+          autoFocus: true
+        }}
+      />      
+      <Button disabled={ rawMobile.trim().length === 0 } variant="contained" color="primary" size="medium" className={classes.button} onClick={() => dispatch(login(mobile))}>
         Login
       </Button>
     </Fragment>
