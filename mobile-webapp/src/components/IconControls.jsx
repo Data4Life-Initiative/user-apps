@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles({
   icon: {
@@ -27,3 +28,13 @@ export const CloseMenu = (props) => {
     </IconButton>
   );
 };
+
+export const BackMenu = (props) => {
+  const classes = useStyles();
+  return (
+    <IconButton size="small" onClick={props.action}>
+      <ArrowBackIosIcon className={classes.icon} />
+    </IconButton>
+  );
+};
+

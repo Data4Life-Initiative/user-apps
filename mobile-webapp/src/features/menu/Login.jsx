@@ -38,7 +38,7 @@ const useStyle = makeStyles({
     fontFamily: ['Arial'],
     fontSize: 22,
     fontWeight: 600,    
-    marginBottom: 75
+    marginBottom: 16
   },
   buttonContainer: {
     paddingTop: 18,
@@ -88,7 +88,7 @@ const Login = () => {
   };  
   const renderLogin = () => (
     <Fragment>
-      <Typography className={classes.otpheading}>Mobile</Typography>
+      <Typography className={classes.otpheading}>Mobile Number</Typography>
       <PhoneInput
         containerStyle={{
             width: 'auto',

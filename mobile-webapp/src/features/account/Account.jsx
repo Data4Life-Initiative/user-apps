@@ -11,6 +11,7 @@ import QRCode from 'qrcode.react';
 
 import { selectAccountDetails, setHealthStatus } from './accountSlice';
 import { setRiskPadding } from '../riskscore/riskSlice';
+import { setLocationSource } from '../historiclocation/historicLocationSlice';
 
 const borderRadius = 18;
 const width = '80%';
@@ -36,7 +37,7 @@ const useStyle = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     paddingTop: 12,
-    paddingBottom: 12,
+    paddingBottom: 6,
     justifyContent: 'center',
   }, 
   healthyContainer: {
@@ -123,20 +124,27 @@ const Account = () => {
   const { mobile, age, infection_status } = useSelector(selectAccountDetails);
   const [state, setState] = React.useState({
     isHealthy: true,
-    hasImmunity: false
+    hasImmunity: false,
+    locationSource: ''
   });  
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleSelectChange = (event) => {
+  const handleHealthStatusSelectChange = (event) => {
     if(event.target.value === 'start_screening') {
       dispatch(setActivePage('screening'));
     } else {
       setHealthStatus(event.target.value);
       // setState({ ...state, [event.target.name]: event.target.value });
     }    
+  };
+
+  const handleSelectChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+    dispatch(setLocationSource(event.target.value));
+    dispatch(setActivePage('historicLocation'));
   };
 
   return (
@@ -167,7 +175,7 @@ const Account = () => {
             id="health-status-select"
             name="healthStatus"
             value={infection_status}
-            onChange={handleSelectChange}
+            onChange={handleHealthStatusSelectChange}
             className={classes.dropdownselect}
             input={<InputBase/>}
             >
@@ -188,9 +196,29 @@ const Account = () => {
           <Label label="LOCATION DATA" />
           <Switch color="primary" name="isLocationEnabled" checked={state.isLocationEnabled} onChange={handleChange}/>
         </Container>
-        <Button variant="outlined" className={classes.history}>
-          Historic Locations
-        </Button>
+        <Label label="HISTORIC LOCATIONS" />
+        <Container className={classes.healthyContainer}>
+          <FormControl className={classes.formControl}>
+            <StyledSelect
+            displayEmpty
+            labelId="location-source-select-label"
+            id="location-source-select"
+            name="locationSource"
+            value={state.locationSource}
+            onChange={handleSelectChange}
+            className={classes.dropdownselect}
+            input={<InputBase/>}
+            >
+              <MenuItem disabled value="">
+                <em>Select location history from...</em>
+              </MenuItem>
+              <MenuItem value="Manual Entry">Manual Entry</MenuItem>
+              <MenuItem value="Google Service">Google Service</MenuItem>
+              <MenuItem value="Facebook Service">Facebook Service</MenuItem>
+              <MenuItem value="Apple Service">Apple Service</MenuItem>              
+            </StyledSelect>
+          </FormControl>
+        </Container>
         <Button
           variant="contained"
           color="primary"

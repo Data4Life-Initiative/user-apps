@@ -58,7 +58,7 @@ const MapComponent = (props) => {
       >
         <HeatmapLayer
           data={R.map((p) => new google.maps.LatLng(p.lat, p.lng), data)}
-        />
+        />        
         {props.children}
       </GoogleMap>
     );
