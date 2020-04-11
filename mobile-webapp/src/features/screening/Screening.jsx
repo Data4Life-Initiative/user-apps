@@ -26,7 +26,7 @@ const useStyle = makeStyles({
     display: 'flex',
     flexDirection: 'column',    
     height: window.innerHeight,
-    widtht: window.innerWidth,
+    width: window.innerWidth,
     backgroundColor: 'rgb(242, 242, 242)'
   },
   screeningpagecontainer: {
