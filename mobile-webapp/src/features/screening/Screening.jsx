@@ -11,6 +11,7 @@ import ReportProblemRoundedIcon from '@material-ui/icons/ReportProblemRounded';
 import CircleChecked from '@material-ui/icons/CheckCircleOutline';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
+import { setHealthStatus } from '../account/accountSlice';
 
 import { selectScreeningDetails } from './screeningSlice';
 
@@ -142,8 +143,6 @@ const Screening = () => {
   const [isPageHeaderEnabled, setPageHeaderEnabled] = useState(false);
   const [pageHeading, setPageHeading] = useState('');
 
-  let totalScreeningPages = 10;
-
   const handleMultipleAnswer = (event) => {
     let indexOfItem = -1;
     let newArrayToSet = [];
@@ -236,6 +235,11 @@ const Screening = () => {
     });
   }
 
+  const completeScreening = () => {
+    dispatch(setHealthStatus('healthy_susceptible'));
+    dispatch(setActivePage('account'));
+  }
+
   const getScreeningContent = (pageNumber) => {
     if (pageNumber === 0) {
       return (
@@ -281,7 +285,7 @@ const Screening = () => {
             variant="contained"
             color="primary"
             className={classes.screeningButton}
-            onClick={() => { !isLastQuestionPage && setScreeningPage(pageNumber + 1) }}
+            onClick={() => { isLastQuestionPage ? completeScreening() : setScreeningPage(pageNumber + 1) }}
           >
             {
               isLastQuestionPage ? 'Done' : 'Next'

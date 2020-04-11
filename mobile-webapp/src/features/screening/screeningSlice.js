@@ -17,18 +17,8 @@ export const slice = createSlice({
         'Slurred speech.',
         'Difficulty waking up.'
       ]
-    }, {
-      page: 1,
-      title: 'How old are you?',
-      type: 'question',
-      multiple: false,
-      items: [
-        'Under 18.',
-        'Between 18 and 64.',
-        '65 or older.'
-      ]
     }, {    
-      page: 2,
+      page: 1,
       title: 'Are you experiencing any of these symptoms?',
       type: 'question',
       description: 'Select all that apply.',
@@ -43,7 +33,7 @@ export const slice = createSlice({
         'None of the above.'
       ]
     }, {    
-      page: 3,
+      page: 2,
       title: 'Do you have any of these conditions?',
       type: 'question',
       description: 'Select all that apply.',
@@ -62,15 +52,6 @@ export const slice = createSlice({
       ]
     }, {    
       page: 4,
-      title: 'In the last 14 days, have you traveled internationally?',
-      type: 'question',
-      multiple: false,
-      items: [
-        'I have traveled internationally.',
-        'I have NOT traveled internationally.',
-      ]
-    }, {    
-      page: 5,
       title: 'In the last 14 days, have you been in an area where COVID-19 is widespread?',
       type: 'question',
       description: 'Select all that apply.',
@@ -81,7 +62,7 @@ export const slice = createSlice({
         'I don\'t know.',
       ]
     }, {    
-      page: 6,
+      page: 5,
       title: 'In the last 14 days, what is your exposure to others who are known to have COVID-19?',
       type: 'question',
       description: 'Select all that apply.',
@@ -93,7 +74,7 @@ export const slice = createSlice({
         'I\'ve had no exposure. I have not been in contact with someone who\'s sick.'
       ]
     }, {    
-      page: 7,
+      page: 6,
       title: 'Do you live or work in a care facility?',
       type: 'question',
       description: 'This includes a hospital, emergency room, other medical setting, or long-term facility. Select all that apply.',

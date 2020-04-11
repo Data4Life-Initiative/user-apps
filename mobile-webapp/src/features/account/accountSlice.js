@@ -17,7 +17,7 @@ const profile = {
       locations: data,
     },
   ],
-  infection_status: 'infected_with_symptom',
+  infection_status: '',
 };
 
 export const slice = createSlice({
@@ -32,16 +32,20 @@ export const slice = createSlice({
     unloadProfile: (state) => {
       state.profile = {};
     },
+    setHealthStatus: (state, action) => {
+      state.profile.infection_status = action.payload;
+    },
   },
 });
 
-export const { profileLoaded, unloadProfile } = slice.actions;
+export const { profileLoaded, unloadProfile, setHealthStatus } = slice.actions;
 
 export const selectAccountDetails = (state) => {
   const { profile } = state.account;
   return {
     age: profile.age,
-    mobile: profile.mobile
+    mobile: profile.mobile,
+    infection_status: profile.infection_status || ''
   };
 };
 

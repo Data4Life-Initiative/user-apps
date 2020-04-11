@@ -78,9 +78,10 @@ const Login = () => {
   const [rawMobile, setRawMobile] = useState('');
   const [otp, setOtp] = useState('');
   const handleMobileChange = (mobile, data, event) => {
-    setRawMobile(mobile.replace(/[^0-9]+/g,'').slice(data.dialCode.length))
+    let rawMobileNum = mobile.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
+    setRawMobile(rawMobileNum)
     setFormatMobile(mobile);
-    setMobile(`+${data.dialCode}${rawMobile}`);
+    setMobile(`+${data.dialCode}${rawMobileNum}`);
   };  
   const handleOtpChange = otp => {
     setOtp(otp);

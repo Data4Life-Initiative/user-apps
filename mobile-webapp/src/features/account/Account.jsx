@@ -9,7 +9,7 @@ import { toggleMain, setActivePage } from '../menu/menuSlice';
 import StyledSelect from '../../components/StyledSelect' 
 import QRCode from 'qrcode.react';
 
-import { selectAccountDetails } from './accountSlice';
+import { selectAccountDetails, setHealthStatus } from './accountSlice';
 import { setRiskPadding } from '../riskscore/riskSlice';
 
 const borderRadius = 18;
@@ -120,11 +120,10 @@ const Label = ({ label }) => {
 const Account = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
-  const { mobile, age } = useSelector(selectAccountDetails);
+  const { mobile, age, infection_status } = useSelector(selectAccountDetails);
   const [state, setState] = React.useState({
     isHealthy: true,
-    hasImmunity: false,
-    healthStatus: ''
+    hasImmunity: false
   });  
 
   const handleChange = (event) => {
@@ -135,7 +134,8 @@ const Account = () => {
     if(event.target.value === 'start_screening') {
       dispatch(setActivePage('screening'));
     } else {
-      setState({ ...state, [event.target.name]: event.target.value });
+      setHealthStatus(event.target.value);
+      // setState({ ...state, [event.target.name]: event.target.value });
     }    
   };
 
@@ -150,16 +150,15 @@ const Account = () => {
           size={100}
           className={classes.qrcode} value={mobile || ''} 
         />          
-        <Label label="YOUR MOBILE NUMBER" />
-        <Button
-          readOnly
-          className={classes.input}
-        >
+        <Label label="MOBILE NUMBER" />
+        <Typography className={classes.input}>
           {mobile || ''}
-        </Button>
-        <Label label="YOUR AGE" />
-        <Button className={classes.input}>{age || ''}</Button>
-        <Label label="YOUR WELLNESS STATUS" />
+        </Typography>
+        <Label label="AGE" />
+        <Typography className={classes.input}>
+          {age || ''}
+        </Typography>
+        <Label label="WELLNESS STATUS" />
         <Container className={classes.healthyContainer}>
           <FormControl className={classes.formControl}>
             <StyledSelect
@@ -167,7 +166,7 @@ const Account = () => {
             labelId="health-status-select-label"
             id="health-status-select"
             name="healthStatus"
-            value={state.healthStatus}
+            value={infection_status}
             onChange={handleSelectChange}
             className={classes.dropdownselect}
             input={<InputBase/>}
@@ -177,6 +176,7 @@ const Account = () => {
               </MenuItem>
               <MenuItem value="start_screening">Start Wellness Screening...</MenuItem>
               <MenuItem value="healthy">Healthy</MenuItem>
+              <MenuItem value="healthy_susceptible">Healthy, But Susceptible</MenuItem>
               <MenuItem value="not_infected">Not Infected</MenuItem>
               <MenuItem value="immunized">Immunized</MenuItem>
               <MenuItem value="infected_with_symptom">Infected With Symptoms</MenuItem>
@@ -185,7 +185,7 @@ const Account = () => {
           </FormControl>  
         </Container>
         <Container className={classes.locationdataContainer}>
-          <Label label="ENABLE YOUR LOCATION DATA" />
+          <Label label="LOCATION DATA" />
           <Switch color="primary" name="isLocationEnabled" checked={state.isLocationEnabled} onChange={handleChange}/>
         </Container>
         <Button variant="outlined" className={classes.history}>
