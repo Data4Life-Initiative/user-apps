@@ -18,6 +18,7 @@ const profile = {
     },
   ],
   infection_status: '',
+  is_location_enabled: false
 };
 
 export const slice = createSlice({
@@ -35,17 +36,21 @@ export const slice = createSlice({
     setHealthStatus: (state, action) => {
       state.profile.infection_status = action.payload;
     },
+    setIsLocationEnabled: (state, action) => {
+      state.profile.is_location_enabled = action.payload;
+    },
   },
 });
 
-export const { profileLoaded, unloadProfile, setHealthStatus } = slice.actions;
+export const { profileLoaded, unloadProfile, setHealthStatus, setIsLocationEnabled } = slice.actions;
 
 export const selectAccountDetails = (state) => {
   const { profile } = state.account;
   return {
     age: profile.age,
     mobile: profile.mobile,
-    infection_status: profile.infection_status || ''
+    infection_status: profile.infection_status || '',
+    is_location_enabled: profile.is_location_enabled || false 
   };
 };
 

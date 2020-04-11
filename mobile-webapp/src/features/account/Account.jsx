@@ -9,7 +9,7 @@ import { toggleMain, setActivePage } from '../menu/menuSlice';
 import StyledSelect from '../../components/StyledSelect' 
 import QRCode from 'qrcode.react';
 
-import { selectAccountDetails, setHealthStatus } from './accountSlice';
+import { selectAccountDetails, setHealthStatus, setIsLocationEnabled } from './accountSlice';
 import { setRiskPadding } from '../riskscore/riskSlice';
 import { setLocationSource } from '../historiclocation/historicLocationSlice';
 
@@ -121,23 +121,22 @@ const Label = ({ label }) => {
 const Account = () => {
   const dispatch = useDispatch();
   const classes = useStyle();
-  const { mobile, age, infection_status } = useSelector(selectAccountDetails);
+  const { mobile, age, infection_status, is_location_enabled } = useSelector(selectAccountDetails);
   const [state, setState] = React.useState({
     isHealthy: true,
     hasImmunity: false,
-    locationSource: ''
+    locationSource: '',
   });  
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleLocationStatusChange = (event) => {
+    dispatch(setIsLocationEnabled(event.target.checked));
   };
 
   const handleHealthStatusSelectChange = (event) => {
     if(event.target.value === 'start_screening') {
       dispatch(setActivePage('screening'));
     } else {
-      setHealthStatus(event.target.value);
-      // setState({ ...state, [event.target.name]: event.target.value });
+      dispatch(setHealthStatus(event.target.value));
     }    
   };
 
@@ -194,7 +193,7 @@ const Account = () => {
         </Container>
         <Container className={classes.locationdataContainer}>
           <Label label="LOCATION DATA" />
-          <Switch color="primary" name="isLocationEnabled" checked={state.isLocationEnabled} onChange={handleChange}/>
+          <Switch color="primary" name="isLocationEnabled" checked={is_location_enabled} onChange={handleLocationStatusChange}/>
         </Container>
         <Label label="HISTORIC LOCATIONS" />
         <Container className={classes.healthyContainer}>
